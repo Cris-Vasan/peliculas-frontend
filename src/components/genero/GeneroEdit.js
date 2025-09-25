@@ -31,7 +31,6 @@ export const GeneroEdit = ({ show, onHide, onSave, genero }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log("📋 Datos del formulario de género antes de enviar:", formData)
     onSave(formData)
   }
 

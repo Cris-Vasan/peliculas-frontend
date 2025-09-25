@@ -37,19 +37,12 @@ export const DirectorView = () => {
 
   const handleUpdateDirector = async (formData) => {
     try {
-      console.log("📝 Datos a enviar:", formData)
-      console.log("🔑 ID del director:", selectedDirector._id)
-      
       await updateDirector(selectedDirector._id, formData)
       setShowEditModal(false)
       setSelectedDirector(null)
       listarDirectores()
       alert('Director actualizado exitosamente!')
     } catch (error) {
-      console.error("❌ Error completo:", error)
-      console.error("❌ Error response:", error.response?.data)
-      console.error("❌ Error status:", error.response?.status)
-      
       const errorMsg = error.response?.data?.message || error.message || 'Error desconocido'
       alert(`Error al actualizar el director: ${errorMsg}`)
     }

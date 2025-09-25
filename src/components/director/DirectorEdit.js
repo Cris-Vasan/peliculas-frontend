@@ -29,7 +29,6 @@ export const DirectorEdit = ({ show, onHide, onSave, director }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log("📋 Datos del formulario de director antes de enviar:", formData)
     onSave(formData)
   }
 

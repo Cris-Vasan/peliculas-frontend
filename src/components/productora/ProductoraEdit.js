@@ -33,7 +33,6 @@ export const ProductoraEdit = ({ show, onHide, onSave, productora }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log("📋 Datos del formulario de productora antes de enviar:", formData)
     onSave(formData)
   }
 
