@@ -89,8 +89,8 @@ export const ProductoraView = () => {
                       <th>Slogan</th>
                       <th>Descripción</th>
                       <th>Estado</th>
-                      <th className="text-center" style={{width: '110px'}}>Creación</th>
-                      <th className="text-center" style={{width: '110px'}}>Actualización</th>
+                      <th className="text-center" style={{width: '140px'}}>Creación</th>
+                      <th className="text-center" style={{width: '140px'}}>Actualización</th>
                       <th className="text-center">Acciones</th>
                     </tr>
                   </thead>
@@ -119,16 +119,28 @@ export const ProductoraView = () => {
                           </span>
                         </td>
                         <td className="text-center">
-                          <small>{productora.fechaCreacion 
-                            ? new Date(productora.fechaCreacion).toLocaleDateString() 
-                            : 'N/A'
-                          }</small>
+                          <small>
+                            {productora.fechaCreacion ? (
+                              <>
+                                <div>{new Date(productora.fechaCreacion).toLocaleDateString()}</div>
+                                <div style={{color: '#6c757d', fontSize: '0.85em'}}>
+                                  {new Date(productora.fechaCreacion).toLocaleTimeString()}
+                                </div>
+                              </>
+                            ) : 'N/A'}
+                          </small>
                         </td>
                         <td className="text-center">
-                          <small>{productora.fechaActualizacion 
-                            ? new Date(productora.fechaActualizacion).toLocaleDateString() 
-                            : 'N/A'
-                          }</small>
+                          <small>
+                            {productora.fechaActualizacion ? (
+                              <>
+                                <div>{new Date(productora.fechaActualizacion).toLocaleDateString()}</div>
+                                <div style={{color: '#6c757d', fontSize: '0.85em'}}>
+                                  {new Date(productora.fechaActualizacion).toLocaleTimeString()}
+                                </div>
+                              </>
+                            ) : 'N/A'}
+                          </small>
                         </td>
                         <td className="text-center">
                           <button 

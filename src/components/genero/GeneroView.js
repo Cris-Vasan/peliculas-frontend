@@ -86,8 +86,8 @@ export const GeneroView = () => {
                       <th>Nombre</th>
                       <th>Descripción</th>
                       <th>Estado</th>
-                      <th className="text-center" style={{width: '120px'}}>Creación</th>
-                      <th className="text-center" style={{width: '120px'}}>Actualización</th>
+                      <th className="text-center" style={{width: '150px'}}>Creación</th>
+                      <th className="text-center" style={{width: '150px'}}>Actualización</th>
                       <th className="text-center">Acciones</th>
                     </tr>
                   </thead>
@@ -113,16 +113,28 @@ export const GeneroView = () => {
                           </span>
                         </td>
                         <td className="text-center">
-                          <small>{genero.fechaCreacion 
-                            ? new Date(genero.fechaCreacion).toLocaleDateString() 
-                            : 'N/A'
-                          }</small>
+                          <small>
+                            {genero.fechaCreacion ? (
+                              <>
+                                <div>{new Date(genero.fechaCreacion).toLocaleDateString()}</div>
+                                <div style={{color: '#6c757d', fontSize: '0.85em'}}>
+                                  {new Date(genero.fechaCreacion).toLocaleTimeString()}
+                                </div>
+                              </>
+                            ) : 'N/A'}
+                          </small>
                         </td>
                         <td className="text-center">
-                          <small>{genero.fechaActualizacion 
-                            ? new Date(genero.fechaActualizacion).toLocaleDateString() 
-                            : 'N/A'
-                          }</small>
+                          <small>
+                            {genero.fechaActualizacion ? (
+                              <>
+                                <div>{new Date(genero.fechaActualizacion).toLocaleDateString()}</div>
+                                <div style={{color: '#6c757d', fontSize: '0.85em'}}>
+                                  {new Date(genero.fechaActualizacion).toLocaleTimeString()}
+                                </div>
+                              </>
+                            ) : 'N/A'}
+                          </small>
                         </td>
                         <td className="text-center">
                           <button 

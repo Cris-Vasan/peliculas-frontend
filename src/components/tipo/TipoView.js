@@ -85,8 +85,8 @@ export const TipoView = () => {
                       <th>#</th>
                       <th>Nombre</th>
                       <th>Descripción</th>
-                      <th className="text-center" style={{width: '120px'}}>Creación</th>
-                      <th className="text-center" style={{width: '120px'}}>Actualización</th>
+                      <th className="text-center" style={{width: '150px'}}>Creación</th>
+                      <th className="text-center" style={{width: '150px'}}>Actualización</th>
                       <th className="text-center">Acciones</th>
                     </tr>
                   </thead>
@@ -99,16 +99,28 @@ export const TipoView = () => {
                         </td>
                         <td>{tipo.descripcion}</td>
                         <td className="text-center">
-                          <small>{tipo.fechaCreacion 
-                            ? new Date(tipo.fechaCreacion).toLocaleDateString() 
-                            : 'N/A'
-                          }</small>
+                          <small>
+                            {tipo.fechaCreacion ? (
+                              <>
+                                <div>{new Date(tipo.fechaCreacion).toLocaleDateString()}</div>
+                                <div style={{color: '#6c757d', fontSize: '0.85em'}}>
+                                  {new Date(tipo.fechaCreacion).toLocaleTimeString()}
+                                </div>
+                              </>
+                            ) : 'N/A'}
+                          </small>
                         </td>
                         <td className="text-center">
-                          <small>{tipo.fechaActualizacion 
-                            ? new Date(tipo.fechaActualizacion).toLocaleDateString() 
-                            : 'N/A'
-                          }</small>
+                          <small>
+                            {tipo.fechaActualizacion ? (
+                              <>
+                                <div>{new Date(tipo.fechaActualizacion).toLocaleDateString()}</div>
+                                <div style={{color: '#6c757d', fontSize: '0.85em'}}>
+                                  {new Date(tipo.fechaActualizacion).toLocaleTimeString()}
+                                </div>
+                              </>
+                            ) : 'N/A'}
+                          </small>
                         </td>
                         <td className="text-center">
                           <button 

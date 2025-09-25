@@ -85,8 +85,8 @@ export const DirectorView = () => {
                       <th>#</th>
                       <th>Nombres</th>
                       <th>Estado</th>
-                      <th className="text-center" style={{width: '120px'}}>Creación</th>
-                      <th className="text-center" style={{width: '120px'}}>Actualización</th>
+                      <th className="text-center" style={{width: '150px'}}>Creación</th>
+                      <th className="text-center" style={{width: '150px'}}>Actualización</th>
                       <th className="text-center">Acciones</th>
                     </tr>
                   </thead>
@@ -111,16 +111,28 @@ export const DirectorView = () => {
                           </span>
                         </td>
                         <td className="text-center">
-                          <small>{director.fechaCreacion 
-                            ? new Date(director.fechaCreacion).toLocaleDateString() 
-                            : 'N/A'
-                          }</small>
+                          <small>
+                            {director.fechaCreacion ? (
+                              <>
+                                <div>{new Date(director.fechaCreacion).toLocaleDateString()}</div>
+                                <div style={{color: '#6c757d', fontSize: '0.85em'}}>
+                                  {new Date(director.fechaCreacion).toLocaleTimeString()}
+                                </div>
+                              </>
+                            ) : 'N/A'}
+                          </small>
                         </td>
                         <td className="text-center">
-                          <small>{director.fechaActualizacion 
-                            ? new Date(director.fechaActualizacion).toLocaleDateString() 
-                            : 'N/A'
-                          }</small>
+                          <small>
+                            {director.fechaActualizacion ? (
+                              <>
+                                <div>{new Date(director.fechaActualizacion).toLocaleDateString()}</div>
+                                <div style={{color: '#6c757d', fontSize: '0.85em'}}>
+                                  {new Date(director.fechaActualizacion).toLocaleTimeString()}
+                                </div>
+                              </>
+                            ) : 'N/A'}
+                          </small>
                         </td>
                         <td className="text-center">
                           <button 
