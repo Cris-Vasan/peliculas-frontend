@@ -96,18 +96,26 @@ export const ProductoraView = () => {
                   </thead>
                   <tbody>
                     {productoras.map((productora, index) => (
-                      <tr key={productora._id}>
+                      <tr 
+                        key={productora._id} 
+                        style={{
+                          opacity: productora.estado === 'Activo' ? 1 : 0.6,
+                          backgroundColor: productora.estado === 'Activo' ? 'transparent' : '#f8f9fa'
+                        }}
+                      >
                         <td>{index + 1}</td>
                         <td>
-                          <strong className="text-primary">{productora.nombre}</strong>
+                          <strong className={productora.estado === 'Activo' ? 'text-primary' : 'text-muted'}>
+                            {productora.nombre}
+                          </strong>
                         </td>
                         <td>
                           <em className="text-muted">{productora.slogan}</em>
                         </td>
                         <td>{productora.descripcion}</td>
                         <td>
-                          <span className={`badge ${productora.estado === 'Activa' ? 'badge-primary-custom' : 'badge-secondary-custom'}`}>
-                            {productora.estado || 'Inactiva'}
+                          <span className={`badge ${productora.estado === 'Activo' ? 'badge-primary-custom' : 'badge-secondary-custom'}`}>
+                            {productora.estado || 'Inactivo'}
                           </span>
                         </td>
                         <td className="text-center">

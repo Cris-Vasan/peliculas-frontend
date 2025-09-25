@@ -92,10 +92,18 @@ export const DirectorView = () => {
                   </thead>
                   <tbody>
                     {directores.map((director, index) => (
-                      <tr key={director._id}>
+                      <tr 
+                        key={director._id}
+                        style={{
+                          opacity: director.estado === 'Activo' ? 1 : 0.6,
+                          backgroundColor: director.estado === 'Activo' ? 'transparent' : '#f8f9fa'
+                        }}
+                      >
                         <td>{index + 1}</td>
                         <td>
-                          <strong className="text-primary">{director.nombres}</strong>
+                          <strong className={director.estado === 'Activo' ? 'text-primary' : 'text-muted'}>
+                            {director.nombres}
+                          </strong>
                         </td>
                         <td>
                           <span className={`badge ${director.estado === 'Activo' ? 'badge-primary-custom' : 'badge-secondary-custom'}`}>

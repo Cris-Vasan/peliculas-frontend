@@ -93,10 +93,18 @@ export const GeneroView = () => {
                   </thead>
                   <tbody>
                     {generos.map((genero, index) => (
-                      <tr key={genero._id}>
+                      <tr 
+                        key={genero._id}
+                        style={{
+                          opacity: genero.estado === 'Activo' ? 1 : 0.6,
+                          backgroundColor: genero.estado === 'Activo' ? 'transparent' : '#f8f9fa'
+                        }}
+                      >
                         <td>{index + 1}</td>
                         <td>
-                          <strong className="text-primary">{genero.nombre}</strong>
+                          <strong className={genero.estado === 'Activo' ? 'text-primary' : 'text-muted'}>
+                            {genero.nombre}
+                          </strong>
                         </td>
                         <td>{genero.descripcion}</td>
                         <td>
