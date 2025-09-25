@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { getProductoras, createProductora, updateProductora } from '../../service/productoraService'
 import { ProductoraNew } from './ProductoraNew'
 import { ProductoraEdit } from './ProductoraEdit'
+import { testProductoraAPI } from '../../helpers/testProductora'
 
 export const ProductoraView = () => {
   const [productoras, setProductoras] = useState([])
@@ -50,7 +51,17 @@ export const ProductoraView = () => {
       console.error("❌ Error response:", error.response?.data)
       console.error("❌ Error status:", error.response?.status)
       
-      const errorMsg = error.response?.data?.message || error.message || 'Error desconocido'
+      // Log detallado de los errores
+      if (error.response?.data?.errors) {
+        console.error("🔍 Errores detallados:", error.response.data.errors)
+        error.response.data.errors.forEach((err, index) => {
+          console.error(`   Error ${index + 1}:`, err)
+        })
+      }
+      
+      const errorMsg = error.response?.data?.message || 
+                      (error.response?.data?.errors && error.response.data.errors[0]?.msg) || 
+                      error.message || 'Error desconocido'
       alert(`Error al actualizar la productora: ${errorMsg}`)
     }
   }
@@ -67,13 +78,23 @@ export const ProductoraView = () => {
             <i className="bi bi-building me-2"></i>
             Gestión de Productoras
           </h2>
-          <button 
-            className="btn-primary-custom"
-            onClick={() => setShowModal(true)}
-          >
-            <i className="bi bi-plus-circle me-2"></i>
-            Agregar Productora
-          </button>
+          <div className="d-flex gap-2">
+            <button 
+              className="btn btn-outline-warning btn-sm"
+              onClick={testProductoraAPI}
+              title="Test API Productoras"
+            >
+              <i className="bi bi-bug me-1"></i>
+              Test
+            </button>
+            <button 
+              className="btn-primary-custom"
+              onClick={() => setShowModal(true)}
+            >
+              <i className="bi bi-plus-circle me-2"></i>
+              Agregar Productora
+            </button>
+          </div>
         </div>
 
         <div className="card card-custom">

@@ -15,7 +15,7 @@ export const ProductoraEdit = ({ show, onHide, onSave, productora }) => {
         nombre: productora.nombre || '',
         slogan: productora.slogan || '',
         descripcion: productora.descripcion || '',
-        estado: productora.estado || 'Activa'
+        estado: productora.estado || 'Activo'
       })
     }
   }, [show, productora])
@@ -23,7 +23,7 @@ export const ProductoraEdit = ({ show, onHide, onSave, productora }) => {
   const handleChange = (e) => {
     let value = e.target.value
     if (e.target.type === 'checkbox') {
-      value = e.target.checked ? 'Activa' : 'Inactiva'
+      value = e.target.checked ? 'Activo' : 'Inactivo'
     }
     setFormData({
       ...formData,
@@ -75,7 +75,7 @@ export const ProductoraEdit = ({ show, onHide, onSave, productora }) => {
                       className="form-check-input"
                       id="estado"
                       name="estado"
-                      checked={formData.estado === 'Activa'}
+                      checked={formData.estado === 'Activo'}
                       onChange={handleChange}
                     />
                     <label className="form-check-label" htmlFor="estado">

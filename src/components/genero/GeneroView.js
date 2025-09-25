@@ -107,8 +107,8 @@ export const GeneroView = () => {
                         </td>
                         <td>{genero.descripcion}</td>
                         <td>
-                          <span className={`badge ${genero.estado ? 'badge-primary-custom' : 'badge-secondary-custom'}`}>
-                            {genero.estado ? 'Activo' : 'Inactivo'}
+                          <span className={`badge ${genero.estado === 'Activo' ? 'badge-primary-custom' : 'badge-secondary-custom'}`}>
+                            {genero.estado || 'Inactivo'}
                           </span>
                         </td>
                         <td className="text-center">
