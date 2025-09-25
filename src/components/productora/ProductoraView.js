@@ -37,14 +37,21 @@ export const ProductoraView = () => {
 
   const handleUpdateProductora = async (formData) => {
     try {
+      console.log("📝 Datos de productora a enviar:", formData)
+      console.log("🔑 ID de la productora:", selectedProductora._id)
+      
       await updateProductora(selectedProductora._id, formData)
       setShowEditModal(false)
       setSelectedProductora(null)
       listarProductoras()
       alert('Productora actualizada exitosamente!')
     } catch (error) {
-      console.error("Error al actualizar productora:", error)
-      alert('Error al actualizar la productora')
+      console.error("❌ Error completo:", error)
+      console.error("❌ Error response:", error.response?.data)
+      console.error("❌ Error status:", error.response?.status)
+      
+      const errorMsg = error.response?.data?.message || error.message || 'Error desconocido'
+      alert(`Error al actualizar la productora: ${errorMsg}`)
     }
   }
 
@@ -104,8 +111,8 @@ export const ProductoraView = () => {
                         </td>
                         <td>{productora.descripcion}</td>
                         <td>
-                          <span className={`badge ${productora.estado ? 'badge-primary-custom' : 'badge-secondary-custom'}`}>
-                            {productora.estado ? 'Activa' : 'Inactiva'}
+                          <span className={`badge ${productora.estado === 'Activa' ? 'badge-primary-custom' : 'badge-secondary-custom'}`}>
+                            {productora.estado || 'Inactiva'}
                           </span>
                         </td>
                         <td className="text-center">

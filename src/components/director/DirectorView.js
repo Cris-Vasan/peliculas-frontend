@@ -37,14 +37,21 @@ export const DirectorView = () => {
 
   const handleUpdateDirector = async (formData) => {
     try {
+      console.log("📝 Datos a enviar:", formData)
+      console.log("🔑 ID del director:", selectedDirector._id)
+      
       await updateDirector(selectedDirector._id, formData)
       setShowEditModal(false)
       setSelectedDirector(null)
       listarDirectores()
       alert('Director actualizado exitosamente!')
     } catch (error) {
-      console.error("Error al actualizar director:", error)
-      alert('Error al actualizar el director')
+      console.error("❌ Error completo:", error)
+      console.error("❌ Error response:", error.response?.data)
+      console.error("❌ Error status:", error.response?.status)
+      
+      const errorMsg = error.response?.data?.message || error.message || 'Error desconocido'
+      alert(`Error al actualizar el director: ${errorMsg}`)
     }
   }
 
@@ -98,8 +105,8 @@ export const DirectorView = () => {
                           <strong className="text-primary">{director.nombres}</strong>
                         </td>
                         <td>
-                          <span className={`badge ${director.estado ? 'badge-primary-custom' : 'badge-secondary-custom'}`}>
-                            {director.estado ? 'Activo' : 'Inactivo'}
+                          <span className={`badge ${director.estado === 'Activo' ? 'badge-primary-custom' : 'badge-secondary-custom'}`}>
+                            {director.estado || 'Inactivo'}
                           </span>
                         </td>
                         <td className="text-center">

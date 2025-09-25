@@ -3,11 +3,14 @@ import React, { useState } from 'react'
 export const DirectorNew = ({ show, onHide, onSave }) => {
   const [formData, setFormData] = useState({
     nombres: '',
-    estado: true
+    estado: 'Activo'
   })
 
   const handleChange = (e) => {
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    let value = e.target.value
+    if (e.target.type === 'checkbox') {
+      value = e.target.checked ? 'Activo' : 'Inactivo'
+    }
     setFormData({
       ...formData,
       [e.target.name]: value
@@ -20,7 +23,7 @@ export const DirectorNew = ({ show, onHide, onSave }) => {
     // Limpiar formulario
     setFormData({
       nombres: '',
-      estado: true
+      estado: 'Activo'
     })
   }
 
@@ -60,7 +63,7 @@ export const DirectorNew = ({ show, onHide, onSave }) => {
                   className="form-check-input"
                   id="estado"
                   name="estado"
-                  checked={formData.estado}
+                  checked={formData.estado === 'Activo'}
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="estado">

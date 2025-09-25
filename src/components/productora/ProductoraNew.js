@@ -5,11 +5,14 @@ export const ProductoraNew = ({ show, onHide, onSave }) => {
     nombre: '',
     slogan: '',
     descripcion: '',
-    estado: true
+    estado: 'Activa'
   })
 
   const handleChange = (e) => {
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    let value = e.target.value
+    if (e.target.type === 'checkbox') {
+      value = e.target.checked ? 'Activa' : 'Inactiva'
+    }
     setFormData({
       ...formData,
       [e.target.name]: value
@@ -24,7 +27,7 @@ export const ProductoraNew = ({ show, onHide, onSave }) => {
       nombre: '',
       slogan: '',
       descripcion: '',
-      estado: true
+      estado: 'Activa'
     })
   }
 
@@ -67,7 +70,7 @@ export const ProductoraNew = ({ show, onHide, onSave }) => {
                       className="form-check-input"
                       id="estado"
                       name="estado"
-                      checked={formData.estado}
+                      checked={formData.estado === 'Activa'}
                       onChange={handleChange}
                     />
                     <label className="form-check-label" htmlFor="estado">

@@ -37,14 +37,21 @@ export const GeneroView = () => {
 
   const handleUpdateGenero = async (formData) => {
     try {
+      console.log("📝 Datos de género a enviar:", formData)
+      console.log("🔑 ID del género:", selectedGenero._id)
+      
       await updateGenero(selectedGenero._id, formData)
       setShowEditModal(false)
       setSelectedGenero(null)
       listarGeneros()
       alert('Género actualizado exitosamente!')
     } catch (error) {
-      console.error("Error al actualizar género:", error)
-      alert('Error al actualizar el género')
+      console.error("❌ Error completo:", error)
+      console.error("❌ Error response:", error.response?.data)
+      console.error("❌ Error status:", error.response?.status)
+      
+      const errorMsg = error.response?.data?.message || error.message || 'Error desconocido'
+      alert(`Error al actualizar el género: ${errorMsg}`)
     }
   }
 

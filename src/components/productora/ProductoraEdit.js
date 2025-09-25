@@ -5,7 +5,7 @@ export const ProductoraEdit = ({ show, onHide, onSave, productora }) => {
     nombre: '',
     slogan: '',
     descripcion: '',
-    estado: true
+    estado: 'Activa'
   })
 
   // Cargar datos cuando se muestre el modal y haya productora seleccionada
@@ -15,13 +15,16 @@ export const ProductoraEdit = ({ show, onHide, onSave, productora }) => {
         nombre: productora.nombre || '',
         slogan: productora.slogan || '',
         descripcion: productora.descripcion || '',
-        estado: productora.estado !== undefined ? productora.estado : true
+        estado: productora.estado || 'Activa'
       })
     }
   }, [show, productora])
 
   const handleChange = (e) => {
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    let value = e.target.value
+    if (e.target.type === 'checkbox') {
+      value = e.target.checked ? 'Activa' : 'Inactiva'
+    }
     setFormData({
       ...formData,
       [e.target.name]: value
@@ -30,6 +33,7 @@ export const ProductoraEdit = ({ show, onHide, onSave, productora }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    console.log("📋 Datos del formulario de productora antes de enviar:", formData)
     onSave(formData)
   }
 
@@ -71,7 +75,7 @@ export const ProductoraEdit = ({ show, onHide, onSave, productora }) => {
                       className="form-check-input"
                       id="estado"
                       name="estado"
-                      checked={formData.estado}
+                      checked={formData.estado === 'Activa'}
                       onChange={handleChange}
                     />
                     <label className="form-check-label" htmlFor="estado">

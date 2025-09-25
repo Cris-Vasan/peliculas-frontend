@@ -32,6 +32,13 @@ export const MediaEdit = ({ show, onHide, onSave, media }) => {
     }
   }, [show, media]);
 
+  // Regenerar serial cuando cambie el tipo
+  useEffect(() => {
+    if (formData.tipo_id && tipos.length > 0 && media && formData.tipo_id !== media.tipo?._id) {
+      generarSerial();
+    }
+  }, [formData.tipo_id, tipos]);
+
   const cargarCatalogos = async () => {
     try {
       const [directoresRes, generosRes, productorasRes, tiposRes] = await Promise.all([
@@ -67,10 +74,61 @@ export const MediaEdit = ({ show, onHide, onSave, media }) => {
     }
   };
 
+  const obtenerPrefijo = (tipoNombre) => {
+    const nombre = tipoNombre.toLowerCase();
+    if (nombre.includes('serie')) return 'SER';
+    if (nombre.includes('pelicula') || nombre.includes('película')) return 'MOV';
+    if (nombre.includes('corto')) return 'SHORT';
+    // Para cualquier otro tipo, usar las primeras 3 letras
+    return tipoNombre.substring(0, 3).toUpperCase();
+  };
+
+  const generarSerial = async () => {
+    try {
+      // Buscar el tipo seleccionado
+      const tipoSeleccionado = tipos.find(tipo => tipo._id === formData.tipo_id);
+      if (!tipoSeleccionado) return;
+
+      const prefijo = obtenerPrefijo(tipoSeleccionado.nombre);
+      
+      // Necesitamos obtener todas las medias para calcular el próximo número
+      const { getMedia } = await import('../../service/mediaService');
+      const mediasRes = await getMedia();
+      const medias = mediasRes.data || [];
+      
+      // Filtrar seriales que empiecen con este prefijo (excluyendo el actual)
+      const serialesConPrefijo = medias
+        .filter(m => m._id !== media._id) // Excluir la media actual
+        .map(media => media.serial)
+        .filter(serial => serial && serial.startsWith(prefijo))
+        .map(serial => {
+          const numero = parseInt(serial.replace(prefijo, ''));
+          return isNaN(numero) ? 0 : numero;
+        });
+      
+      // Obtener el próximo número
+      const proximoNumero = serialesConPrefijo.length > 0 
+        ? Math.max(...serialesConPrefijo) + 1 
+        : 1;
+      
+      // Generar el serial con formato: PREFIJO + número con 3 dígitos
+      const nuevoSerial = `${prefijo}${proximoNumero.toString().padStart(3, '0')}`;
+      
+      setFormData(prev => ({
+        ...prev,
+        serial: nuevoSerial
+      }));
+      
+    } catch (error) {
+      console.error("Error al generar serial:", error);
+    }
+  };
+
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
   };
 
@@ -98,7 +156,10 @@ export const MediaEdit = ({ show, onHide, onSave, media }) => {
               <div className="row">
                 <div className="col-md-6">
                   <div className="mb-3">
-                    <label htmlFor="serial" className="form-label">Serial *</label>
+                    <label htmlFor="serial" className="form-label">
+                      Serial * 
+                      <small className="text-muted">(Se regenera al cambiar tipo)</small>
+                    </label>
                     <input
                       type="text"
                       className="form-control form-control-custom"

@@ -4,7 +4,7 @@ export const GeneroEdit = ({ show, onHide, onSave, genero }) => {
   const [formData, setFormData] = useState({
     nombre: '',
     descripcion: '',
-    estado: true
+    estado: 'Activo'
   })
 
   // Cargar datos cuando se muestre el modal y haya género seleccionado
@@ -13,13 +13,16 @@ export const GeneroEdit = ({ show, onHide, onSave, genero }) => {
       setFormData({
         nombre: genero.nombre || '',
         descripcion: genero.descripcion || '',
-        estado: genero.estado !== undefined ? genero.estado : true
+        estado: genero.estado || 'Activo'
       })
     }
   }, [show, genero])
 
   const handleChange = (e) => {
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    let value = e.target.value
+    if (e.target.type === 'checkbox') {
+      value = e.target.checked ? 'Activo' : 'Inactivo'
+    }
     setFormData({
       ...formData,
       [e.target.name]: value
@@ -28,6 +31,7 @@ export const GeneroEdit = ({ show, onHide, onSave, genero }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    console.log("📋 Datos del formulario de género antes de enviar:", formData)
     onSave(formData)
   }
 
@@ -78,7 +82,7 @@ export const GeneroEdit = ({ show, onHide, onSave, genero }) => {
                   className="form-check-input"
                   id="estado"
                   name="estado"
-                  checked={formData.estado}
+                  checked={formData.estado === 'Activo'}
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="estado">
